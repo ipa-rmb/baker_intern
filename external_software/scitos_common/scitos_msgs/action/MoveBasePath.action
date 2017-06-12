@@ -1,0 +1,14 @@
+# waypoints of the path [m]
+geometry_msgs/PoseStamped[] target_poses
+
+# position tolerance at each waypoint, i.e. the acceptable deviation from the given path [m]
+float32 path_tolerance
+
+# position tolerance at the goal point (the last point) [m]
+float32 goal_position_tolerance
+
+# angular tolerance at the goal point (the last point) [rad]
+float32 goal_angle_tolerance
+---
+---
+geometry_msgs/PoseStamped base_position
