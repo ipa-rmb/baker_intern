@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+	<name>lips_camera</name>
+	<version>0.1.0</version>
+	<description>Driver wrappers for lips camera.</description>
+
+	<maintainer email="richard.bormann@ipa.fraunhofer.de">Richard Bormann</maintainer>
+	<license>LGPL</license>
+	<!-- <url type="website">http://wiki.ros.org/lips_camera</url> -->
+	<author email="richard.bormann@ipa.fraunhofer.de">Richard Bormann</author>
+
+
+	<buildtool_depend>catkin</buildtool_depend>
+
+	<depend>cv_bridge</depend>
+	<depend>image_transport</depend>
+	<depend>libopencv-dev</depend>
+	<depend>libpcl-all-dev</depend>
+	<depend>roscpp</depend>
+	<depend>roslib</depend>
+	<depend>sensor_msgs</depend>
+	<depend>tf</depend>
+
+</package>
