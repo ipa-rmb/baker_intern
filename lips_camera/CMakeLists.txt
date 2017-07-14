@@ -83,16 +83,18 @@ include_directories(
 	${PCL_INCLUDE_DIRS}
 )
 
+link_directories(common/lib)
+
 ## Declare a C++ executable
 add_executable(lips_camera
 	ros/src/lips_camera_node.cpp
-	#ros/src/lips_camera.cpp
+	ros/src/lips_camera.cpp
 )
 target_link_libraries(lips_camera
 	${catkin_LIBRARIES} # automatically links all catkin_BUILD_PACKAGES
 	${OpenCV_LIBRARIES}
 	${PCL_LIBRARIES}
-	NxLib64.so
+	OpenNI2
 )
 add_dependencies(lips_camera	${catkin_EXPORTED_TARGETS})
 

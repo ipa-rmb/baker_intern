@@ -1,6 +1,6 @@
 /****************************************************************
  *
- * Copyright (c) 2015
+ * Copyright (c) 2017
  *
  * Fraunhofer Institute for Manufacturing Engineering
  * and Automation (IPA)
@@ -86,7 +86,7 @@ LipsCamera::~LipsCamera()
 
 	if (isInitialized())
 	{
-		OpenNI::shutdown();
+		openni::OpenNI::shutdown();
 	}
 }
 
@@ -98,9 +98,9 @@ void LipsCamera::init()
 		return;
 	}
 
-	if (openni::STATUS_OK != OpenNI::initialize())
+	if (openni::STATUS_OK != openni::OpenNI::initialize())
 	{
-		std::cout << "Error - LipsCamera::init: After initialization: " << OpenNI::getExtendedError() << endl;
+		std::cout << "Error - LipsCamera::init: After initialization: " << openni::OpenNI::getExtendedError() << std::endl;
 		return;
 	}
 
@@ -128,8 +128,14 @@ void LipsCamera::open()
 	if (openni::STATUS_OK != camera_device_.open(openni::ANY_DEVICE))
 	{
 		std::cerr << "ERROR - LipsCamera::open:" << std::endl;
-		std::cerr << "\t ... Cannot open device: " << OpenNI::getExtendedError() << endl;
+		std::cerr << "\t ... Cannot open device: " << openni::OpenNI::getExtendedError() << std::endl;
 		return;
+	}
+
+	if (openni::STATUS_OK != camera_device_.setImageRegistrationMode(openni::IMAGE_REGISTRATION_DEPTH_TO_COLOR))
+	{
+		std::cerr << "ERROR - LipsCamera::open:" << std::endl;
+		std::cerr << "\t ... Cannot set ImageRegistration mode: " << openni::OpenNI::getExtendedError() << std::endl;
 	}
 
 	openni::VideoMode mode;
@@ -139,7 +145,7 @@ void LipsCamera::open()
 	if (openni::STATUS_OK != depth_stream_.create(camera_device_, openni::SENSOR_DEPTH))
 	{
 		std::cerr << "ERROR - LipsCamera::open:" << std::endl;
-		std::cerr << "\t ... Cannot create depth stream on device: " << OpenNI::getExtendedError() << endl;
+		std::cerr << "\t ... Cannot create depth stream on device: " << openni::OpenNI::getExtendedError() << std::endl;
 		return;
 	}
 	else
@@ -148,7 +154,7 @@ void LipsCamera::open()
 		if (openni::STATUS_OK != depth_stream_.setVideoMode(mode))
 		{
 			std::cerr << "ERROR - LipsCamera::open:" << std::endl;
-			std::cerr << "\t ... Cannot set video mode: " << OpenNI::getExtendedError() << endl;
+			std::cerr << "\t ... Cannot set video mode: " << openni::OpenNI::getExtendedError() << std::endl;
 			return;
 		}
 	}
@@ -157,7 +163,7 @@ void LipsCamera::open()
 	if (openni::STATUS_OK != color_stream_.create(camera_device_, openni::SENSOR_COLOR))
 	{
 		std::cerr << "ERROR - LipsCamera::open:" << std::endl;
-		std::cerr << "\t ... Cannot create color stream on device: " << OpenNI::getExtendedError() << endl;
+		std::cerr << "\t ... Cannot create color stream on device: " << openni::OpenNI::getExtendedError() << std::endl;
 		return;
 	}
 	else
@@ -166,7 +172,7 @@ void LipsCamera::open()
 		if (openni::STATUS_OK != color_stream_.setVideoMode(mode))
 		{
 			std::cerr << "ERROR - LipsCamera::open:" << std::endl;
-			std::cerr << "\t ... Cannot set color mode: " << OpenNI::getExtendedError() << endl;
+			std::cerr << "\t ... Cannot set color mode: " << openni::OpenNI::getExtendedError() << std::endl;
 			return;
 		}
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <launch>
-	<arg name="camera" default="camera" />
+	<arg name="camera" default="lips_camera" />
 	
 	<node name="lips_camera" pkg="lips_camera" type="lips_camera" output="screen" required="true">
 		<rosparam command="load" file="$(find lips_camera)/ros/launch/lips_camera_params.yaml"/>

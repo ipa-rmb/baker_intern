@@ -1,6 +1,6 @@
 /****************************************************************
  *
- * Copyright (c) 2015
+ * Copyright (c) 2017
  *
  * Fraunhofer Institute for Manufacturing Engineering
  * and Automation (IPA)
@@ -66,7 +66,7 @@
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 
-#include <OpenNI.h>
+#include <lips/OpenNI.h>
 #include <iostream>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
