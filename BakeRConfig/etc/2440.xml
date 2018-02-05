@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <!--The camera instrinsic parameters.-->
+  <Intrinsic>
+    <!--norm. coordinate of the focal point-->
+    <Fx>0.889035880566</Fx>
+    <!--norm. coordinate of the focal point-->
+    <Fy>1.16594874859</Fy>
+    <!--norm. coordinate of the optical center-->
+    <Cx>0.499245166779</Cx>
+    <!--norm. coordinate of the optical center-->
+    <Cy>0.498069941998</Cy>
+    <!--radial distortion-->
+    <K1>-0.0291151106358</K1>
+    <!--radial distortion-->
+    <K2>-0.00633075321093</K2>
+    <!--tangential distortion-->
+    <P1>-0.000518611457665</P1>
+    <!--tangential distortion-->
+    <P2>0.000240216977545</P2>
+  </Intrinsic>
+</root>
