@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <MapConfigurationFile version="2">
+    <Maps>
+      <key>map</key>
+      <item version="2">
+        <MapName>map</MapName>
+        <StaticMap>map-static.xml</StaticMap>
+        <NogoMap>map-nogo.xml</NogoMap>
+        <SpeedMap/>
+        <OnewayMap/>
+        <NoGoAreas>
+          <RectAreas>
+            <item>
+              <Data>
+                <key>criticality</key>
+                <item>0</item>
+              </Data>
+              <Rotation>0</Rotation>
+              <Rect>
+                <MinCorner>
+                  <X>13.575378418</X>
+                  <Y>-29.2340888977</Y>
+                </MinCorner>
+                <MaxCorner>
+                  <X>15.227560997</X>
+                  <Y>-25.0400867462</Y>
+                </MaxCorner>
+              </Rect>
+              <Text/>
+            </item>
+	  </RectAreas>
+          <PolygonAreas/>
+          <EllipseAreas/>
+        </NoGoAreas>
+        <SpeedAreas>
+          <RectAreas/>
+          <PolygonAreas/>
+          <EllipseAreas/>
+        </SpeedAreas>
+        <OnewayAreas>
+          <RectAreas/>
+        </OnewayAreas>
+        <ReferencePoints>
+          <item>
+            <Pose>
+              <X>0</X>
+              <Y>0</Y>
+              <Phi>0</Phi>
+            </Pose>
+            <Name>Initial position</Name>
+          </item>
+        </ReferencePoints>
+        <Offset>
+          <X>0</X>
+          <Y>0</Y>
+          <Phi>0</Phi>
+        </Offset>
+      </item>
+    </Maps>
+  </MapConfigurationFile>
+</root>

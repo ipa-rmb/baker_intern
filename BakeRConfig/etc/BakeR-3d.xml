@@ -1,0 +1,103 @@
+<root>
+
+	<namespace name="depthCam1">
+		<if useDepth1="true">
+			<include file="${findpkg PrimeSense}/etc/PrimeSense.xml" />
+			<parameter name="PrimeSenseDevice.Device.SerialNo">1311230137</parameter>
+			<parameter name="PrimeSenseDevice.DepthIntrinsic">
+				<include file="${findpkg BakeRConfig}/etc/2491.xml"
+                                         select="Intrinsic/*"/>
+			</parameter>
+
+			<unit id="DepthToPointCloud" class="mira::sensors::DepthToPointCloud">
+				<A>325.616</A>
+				<B>1084.61f</B>
+
+				<MinDepth>0.1</MinDepth>
+				<MaxDepth>8.0</MaxDepth>
+			</unit>
+		</if>
+	</namespace>
+
+	<namespace name="depthCam2">
+		<if useDepth2="true">
+			<include file="${findpkg PrimeSense}/etc/PrimeSense.xml" />
+			<parameter name="PrimeSenseDevice.Device.SerialNo">1311240046</parameter>
+			<parameter name="PrimeSenseDevice.DepthIntrinsic">
+				<include file="${findpkg BakeRConfig}/etc/2440.xml"
+                                         select="Intrinsic/*"/>
+			</parameter>
+
+			<unit id="DepthToPointCloud" class="mira::sensors::DepthToPointCloud">
+				<A>325.616</A>
+				<B>1084.61f</B>
+
+				<MinDepth>0.1</MinDepth>
+				<MaxDepth>8.0</MaxDepth>
+			</unit>
+		</if>
+	</namespace>
+
+<!--
+	<namespace name="depthCam3">
+		<if useDepth3="true">
+			<include file="${findpkg PrimeSense}/etc/PrimeSense.xml" />
+			<parameter name="PrimeSenseDevice.Device.SerialNo">1311250222</parameter>
+			<parameter name="PrimeSenseDevice.DepthIntrinsic">
+				<include file="${findpkg BakeRConfig}/etc/2716.xml"
+                                         select="Intrinsic/*"/>
+			</parameter>
+
+			<unit id="DepthToPointCloud" class="mira::sensors::DepthToPointCloud">
+				<A>325.616</A>
+				<B>1084.61f</B>
+
+				<MinDepth>0.1</MinDepth>
+				<MaxDepth>8.0</MaxDepth>
+			</unit>
+		</if>
+	</namespace>
+	<namespace name="depthCam4">
+		<if useDepth4="true">
+			<include file="${findpkg PrimeSense}/etc/PrimeSense.xml" />
+			<parameter name="PrimeSenseDevice.Device.SerialNo">1311250306</parameter>
+			<parameter name="PrimeSenseDevice.DepthIntrinsic">
+				<include file="${findpkg BakeRConfig}/etc/2713.xml"
+                                         select="Intrinsic/*"/>
+			</parameter>
+
+			<unit id="DepthToPointCloud" class="mira::sensors::DepthToPointCloud">
+				<A>325.616</A>
+				<B>1084.61f</B>
+
+				<MinDepth>0.1</MinDepth>
+				<MaxDepth>8.0</MaxDepth>
+			</unit>
+		</if>
+	</namespace>
+-->
+	<namespace name="depth_assembled">
+		<!--
+		<using name="/robot/OdometryFrame" as="PointCloudFrame"/>
+		-->
+		<using name="/robot/RobotFrame" as="PointCloudFrame"/>
+		
+		<unit id="Assembler" class="mira::sensors::PointCloudAssembler">
+			<PointCloudChannels>
+				<if useDepth1="true">
+					<item>../depthCam1/PointCloud</item>
+				</if>
+				<if useDepth2="true">
+					<item>../depthCam2/PointCloud</item>
+				</if>
+				<if useDepth3="true">
+					<item>../depthCam3/PointCloud</item>
+				</if>
+				<if useDepth4="true">
+					<item>../depthCam4/PointCloud</item>
+				</if>
+			</PointCloudChannels>
+		</unit>
+	</namespace>
+
+</root>

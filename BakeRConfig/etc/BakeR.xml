@@ -1,0 +1,9 @@
+<root>
+	<var hardware="HG4"/>
+
+	<include file="${findpkg BakeRConfig}/etc/BakeR-${hardware}.xml" />
+
+	<if_not hardware="Simulation">
+		<include file="${findpkg BakeRConfig}/etc/BakeR-3d.xml" />		
+	</if_not>	
+</root>

@@ -1,0 +1,127 @@
+<root>
+	<unit id="Robot" class="mira::robot::SCITOSManager">
+		<!--Timeout for removing dead modules-->
+		<DeadModuleTimeout>10000</DeadModuleTimeout>
+		<!--The type of the robot-->
+		<RobotType>G5</RobotType>
+		<!--The used robot model provider-->
+		<RobotModelProvider>
+			<include file="${findpkg BakeRConfig}/etc/BakeR-model.xml" />
+		</RobotModelProvider>
+		<!--Configuration for all modules-->
+		<Modules>
+			<!--The main control unit-->
+			<MainControlUnit>
+				<!--The odometry update interval [ms]-->
+				<OdometryInterval>50</OdometryInterval>
+				<!--Should odometry be reseted on start-->
+				<ResetOdometryOnStart>true</ResetOdometryOnStart>
+				<!--Should odometry be corrected based on OdometryCorrection-->
+				<UseOdometryCorrection>${useOdometryCorrection}</UseOdometryCorrection>
+				<!--Parameters for odometry correction -->
+				<OdometryCorrection>
+					<!--Correction factor for wheel base (distance between both wheels). Compensates 
+						deviations of the wheel base due to construction. (default: 1.0 which does 
+						no correction) -->
+					<cb>${wheelBaseCorrectionFactor}</cb>
+					<!--Correction factor for wheel diameter ratio between left and right wheel. 
+						This compensates small differences between the wheel diameter of the left 
+						and right wheel. (default: 1.0 which does no correction) -->
+					<cr>${wheelDiameterCorrectionFactor}</cr>
+					<!--Correction factor for the average wheel diameter. This can be regarded 
+						as an overall scaling factor for the left and right wheel. (default: 1.0 
+						which does no correction) -->
+					<cd>${averageWheelDiameterCorrectionFactor}</cd>
+				</OdometryCorrection>
+				<!--Use distance readings per wheel for calculating odometry -->
+				<CalculateOdometryFromDistance>false</CalculateOdometryFromDistance>
+				<!--Is freerun persistently on -->
+				<!--<PersistentFreerun>true</PersistentFreerun>-->
+				<!--Freerun mode -->
+				<!--<FreerunMode>true</FreerunMode>-->
+				<!--The Kp part of the PID controller -->
+				<!--<WheelPIDKp>0.1</WheelPIDKp>-->
+				<!--The Ki part of the PID controller -->
+				<!--<WheelPIDKi>0.04</WheelPIDKi>-->
+				<!--The Kd part of the PID controller -->
+				<!--<WheelPIDKd>0</WheelPIDKd>-->
+				<!--The force applied to the motors in percent -->
+				<Force>80</Force>
+				<!--Driving mode (0 = execute a velocity command, 1 = drive a given distance) -->
+				<!--<DriveMode>0</DriveMode>-->
+				<!--This value defines how often the acceleration or deceleration of the 
+					robot can be updated. Small values result to a steeper ramp. Bigger values 
+					leads to a more flat ramp and a more soft movement. -->
+				<!--<AccelerationUpdateInterval>8</AccelerationUpdateInterval>-->
+				<!--Enable/disable RFID reader -->
+				<RFIDReaderEnabled>true</RFIDReaderEnabled>
+				<!--EBC 5V -->
+				<EBC_5V>
+					<!--Max current [A] -->
+					<MaxCurrent>2.5</MaxCurrent>
+					<!--Is power enabled -->
+					<Enabled>true</Enabled>
+				</EBC_5V>
+				<!--EBC 12V -->
+				<EBC_12V>
+					<!--Max current [A] -->
+					<MaxCurrent>2.5</MaxCurrent>
+					<!--Is power enabled -->
+					<Enabled>true</Enabled>
+				</EBC_12V>
+				<!--EBC 24V -->
+				<EBC_24V>
+					<!--Max current [A] -->
+					<MaxCurrent>4</MaxCurrent>
+					<!--Is power enabled -->
+					<Enabled>true</Enabled>
+				</EBC_24V>
+				<!--Power supply for front laser -->
+				<FrontLaser>
+					<!--Max current [A] -->
+					<MaxCurrent>1</MaxCurrent>
+					<!--Is power enabled -->
+					<Enabled>true</Enabled>
+				</FrontLaser>
+				<!--Power supply for rear laser -->
+				<RearLaser>
+					<MaxCurrent>1</MaxCurrent>
+					<Enabled>true</Enabled>
+				</RearLaser>
+			</MainControlUnit>
+			<!--EBC module in slot 7-->
+			<EBC7>
+				<!--Port0 5V -->
+				<Port0_5V>
+					<!--Max current [A] -->
+					<MaxCurrent>2.5</MaxCurrent>
+					<!--Is power enabled -->
+					<Enabled>true</Enabled>
+				</Port0_5V>
+				<!--Port0 12V -->
+				<Port0_12V>
+					<!--Max current [A] -->
+					<MaxCurrent>2.5</MaxCurrent>
+					<!--Is power enabled -->
+					<Enabled>true</Enabled>
+				</Port0_12V>
+				<!--Port0 24V -->
+				<Port0_24V>
+					<!--Max current [A] -->
+					<MaxCurrent>4</MaxCurrent>
+					<!--Is power enabled -->
+					<Enabled>true</Enabled>
+				</Port0_24V>
+				<!--Port1 24V -->
+				<Port1_24V>
+					<!--Max current [A] -->
+					<MaxCurrent>2.5</MaxCurrent>
+					<!--Is power enabled -->
+					<Enabled>true</Enabled>
+				</Port1_24V>
+			</EBC7>
+		</Modules>
+	</unit>
+
+	<link child="RobotFrame" parent="OdometryFrame" />
+</root>

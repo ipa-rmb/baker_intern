@@ -1,0 +1,52 @@
+<root>
+	<unit id="Robot" class="mira::robot::SCITOSSimulatorManager">
+		<RobotType>BakeR</RobotType>
+		<RobotModelProvider>
+			<include file="${findpkg BakeRConfig}/etc/BakeR-model.xml" />
+		</RobotModelProvider>
+		<Modules>
+			<MainControlUnit class="mira::robot::MainControlUnitHG2Simulator">
+				<OdometryInterval>50</OdometryInterval>
+				<!-- abuse correction factors for applying an error to the otherwise undisturbed odometry -->
+				<UseOdometryCorrection>true</UseOdometryCorrection>
+				<OdometryCorrection>
+					<cb>0.98</cb>
+					<cr>1.02</cr>
+					<cd>1.0</cd>
+				</OdometryCorrection>
+				<Force>80</Force>
+				<RFIDReaderEnabled>true</RFIDReaderEnabled>
+				<EBC_5V>
+					<MaxCurrent>2.5</MaxCurrent>
+					<Enabled>true</Enabled>
+				</EBC_5V>
+				<EBC_12V>
+					<MaxCurrent>2.5</MaxCurrent>
+					<Enabled>true</Enabled>
+				</EBC_12V>
+				<EBC_24V>
+					<MaxCurrent>4</MaxCurrent>
+					<Enabled>true</Enabled>
+				</EBC_24V>
+				<MotorResetOnErrorCurrentThreshold>0.03</MotorResetOnErrorCurrentThreshold>
+				<MotorResetOnErrorTimeout>500</MotorResetOnErrorTimeout>
+
+				<!-- A SICK S300 Standard is used as front laser. -->
+				<FrontLaser>
+					<MaxCurrent>2.5</MaxCurrent>
+					<Enabled>true</Enabled>
+				</FrontLaser>
+
+				<!-- The rear laser power supply is used for the magnetic sensor. -->
+				<RearLaser>
+					<MaxCurrent>1.0</MaxCurrent>
+					<Enabled>true</Enabled>
+				</RearLaser>
+			</MainControlUnit>
+			<Charger class="mira::robot::ChargerHG2Simulator" />
+			<RFIDReader class="mira::robot::RFIDReaderSimulator" />
+		</Modules>
+	</unit>
+
+	<link child="RobotFrame" parent="OdometryFrame" />
+</root>

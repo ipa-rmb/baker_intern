@@ -1,0 +1,1 @@
+miracenter BakeRConfig:etc/BakeR-application.xml -v MCFFile=BakeRConfig:etc/maps/Kenter/map.mcf,cleaningMap=BakeRConfig:etc/maps/Kenter/map-clean.xml,segmentationMap=BakeRConfig:etc/maps/Kenter/map-segmentation.xml,useNogo=true

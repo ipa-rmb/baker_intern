@@ -1,0 +1,64 @@
+<root>
+
+	<!-- 
+	to start robot simulation:
+	miracenter BakeRConfig:etc/BakeR-application-simulation.xml -v MCFFile=[map],cleaningMap=[cleaningMap]
+	-->
+
+	<var hardware = "Simulation" />
+	<include file = "${findpkg BakeRConfig}/etc/SCITOSRobotAttributes-template.xml"/>
+
+	<var pathPlanner="${findpkg PilotSmoothTransition}/etc/SmoothPathPlanner.xml"/>
+
+	<include file="${findpkg SCITOSSimulator}/etc/SCITOS-Pilot.xml"/>
+	
+	<namespace name="navigation">
+		<parameter name="Pilot.Planner.Objectives[?].item.Objective{mira::pilot::SmoothTransitionPathObjective}.Planner">
+			<PersistentDoubleBuffer>true</PersistentDoubleBuffer>
+			<MaxPlanningTime>3000</MaxPlanningTime>
+		</parameter>
+
+		<parameter name="Pilot.Planner.Objectives[+end]">
+			<item>
+				<Objective class="mira::pilot::WallDistanceObjective">
+				</Objective>
+				<Disabled>false</Disabled>
+				<Weight>1.0</Weight>
+			</item>
+		</parameter>
+
+	</namespace>
+
+	<namespace name="modules">
+		<namespace name="brushcleaning">
+			<using name="../../robot/RobotFrame"/>
+			<using name="../../robot/OdometryFrame"/>
+			<include file="${findpkg BakeRCleaningModule}/etc/BakeRCleaningModule.xml" />
+			<parameter name="BakeRCleaningModule">
+				<Simulation>true</Simulation>
+			</parameter>
+		</namespace>
+	</namespace>
+	
+	<if_exists var="cleaningMap">
+		<namespace name="maps">
+			<namespace name="cleaning">
+				<using name="../MapFrame"/>
+				<unit id="MapPublisher" class="mira::mapping::OccupancyGridLoader">
+					<include file="${cleaningMap}"/>
+				</unit>
+			</namespace>
+		</namespace>
+	</if_exists>	
+	<if_exists var="segmentationMap">
+		<namespace name="maps">
+			<namespace name="segmentation">
+				<using name="../MapFrame"/>
+				<unit id="MapPublisher" class="mira::mapping::OccupancyGridLoader">
+					<include file="${segmentationMap}"/>
+				</unit>
+			</namespace>
+		</namespace>
+	</if_exists>
+</root>
+
