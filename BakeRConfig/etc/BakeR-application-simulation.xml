@@ -18,6 +18,10 @@
 			<MaxPlanningTime>3000</MaxPlanningTime>
 		</parameter>
 
+		<parameter name="Pilot.Planner.Objectives[?].item.Objective{mira::pilot::DirectionObjective}">
+			<MinWrongDirectionCost>0.001</MinWrongDirectionCost>
+		</parameter>
+
 		<parameter name="Pilot.Planner.Objectives[+end]">
 			<item>
 				<Objective class="mira::pilot::WallDistanceObjective">
@@ -39,7 +43,7 @@
 			</parameter>
 		</namespace>
 	</namespace>
-	
+
 	<if_exists var="cleaningMap">
 		<namespace name="maps">
 			<namespace name="cleaning">
@@ -49,7 +53,7 @@
 				</unit>
 			</namespace>
 		</namespace>
-	</if_exists>	
+	</if_exists>
 	<if_exists var="segmentationMap">
 		<namespace name="maps">
 			<namespace name="segmentation">
@@ -60,5 +64,6 @@
 			</namespace>
 		</namespace>
 	</if_exists>
+	
 </root>
 

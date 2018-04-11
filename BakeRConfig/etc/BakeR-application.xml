@@ -25,6 +25,10 @@
 			<MaxPlanningTime>3000</MaxPlanningTime>
 		</parameter>
 
+		<parameter name="Pilot.Planner.Objectives[?].item.Objective{mira::pilot::DirectionObjective}">
+			<MinWrongDirectionCost>0.001</MinWrongDirectionCost>
+		</parameter>
+
 		<parameter name="Pilot.Planner.Objectives[+end]">
 			<item>
 				<Objective class="mira::pilot::WallDistanceObjective">
@@ -34,6 +38,14 @@
 			</item>
 		</parameter>
 
+	</namespace>
+
+	<namespace name="maps">
+		<namespace name="cost">
+			<parameter name="CostMapper.CostMaps[0].item.Mappers[0].item">
+				<MaxObstacleDistance>0.2</MaxObstacleDistance>
+			</parameter>	
+		</namespace>
 	</namespace>
 
 	<if useRhodos="true">
