@@ -5,6 +5,12 @@
 	miracenter BakeRConfig:etc/BakeR-application-simulation.xml -v MCFFile=[map],cleaningMap=[cleaningMap]
 	-->
 
+	<var MCFFile="/home/rmb/git/care-o-bot-indigo/src/baker/mira-simulation-config/maps/AVH2-clean/map.mcf"/>
+	<var cleaningMap="/home/rmb/git/care-o-bot-indigo/src/baker/mira-simulation-config/maps/AVH2-clean/map-clean.xml"/>
+	<var segmentationMap="BakeRConfig:etc/maps/AVH2/map-segmentation.xml"/>
+
+	<var useDocking="false"/>
+
 	<var hardware = "Simulation" />
 	<include file = "${findpkg BakeRConfig}/etc/SCITOSRobotAttributes-template.xml"/>
 
@@ -12,6 +18,14 @@
 
 	<include file="${findpkg SCITOSSimulator}/etc/SCITOS-Pilot.xml"/>
 	
+	<!--namespace name="robot">
+		<parameter name="Robot.RobotModelProvider.Model">
+			<MaxForwardVelocity>0.6</MaxForwardVelocity>
+			<MaxBackwardVelocity>-0.2</MaxBackwardVelocity>
+			<MaxRotVelocity>60</MaxRotVelocity>
+		</parameter>
+	</namespace-->
+
 	<namespace name="navigation">
 		<parameter name="Pilot.Planner.Objectives[?].item.Objective{mira::pilot::SmoothTransitionPathObjective}.Planner">
 			<PersistentDoubleBuffer>true</PersistentDoubleBuffer>
