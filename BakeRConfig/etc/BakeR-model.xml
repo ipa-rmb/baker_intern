@@ -1,0 +1,107 @@
+<root>
+	<Model class="mira::robot::DifferentialRobotModel">
+		<MaxForwardVelocity>0.6</MaxForwardVelocity>
+		<MaxBackwardVelocity>-0.2</MaxBackwardVelocity>
+		<MaxRotVelocity>60</MaxRotVelocity>
+		<TransEpsilonVelocity>0.01</TransEpsilonVelocity>
+		<RotEpsilonVelocity>1</RotEpsilonVelocity>
+		<MaxTransAcceleration>0.25</MaxTransAcceleration>
+		<MaxTransDeceleration>1.0</MaxTransDeceleration>
+		<MaxRotAcceleration>60</MaxRotAcceleration>
+		<MaxRotDeceleration>180</MaxRotDeceleration>
+		<MaxEmergencyDeceleration>1.0</MaxEmergencyDeceleration>
+		<WheelDistance>0.54</WheelDistance>
+
+		<AlphaRotRot>0.0005</AlphaRotRot>
+		<AlphaRotTrans>0.0005</AlphaRotTrans>
+		<AlphaTransTrans>0.0005</AlphaTransTrans>
+		<AlphaTransRot>0.0005</AlphaTransRot>
+		<RMDF>
+			<model name="BakeR">
+				<link name="RobotFrame">
+					<collision>
+						<geometry>
+							<box size=" 0.80 0.575 0.005"/>
+						</geometry>
+						<origin xyz="0.08 0 0.125" />
+					</collision>
+					<collision> <!--  cleaner -->
+						<geometry>
+							<cylinder length="0.005" radius="0.235" />
+						</geometry>
+						<origin xyz="0.295 -0.114 0.125" />
+					</collision>
+					<collision> <!--  front laser scanner -->
+						<geometry>
+							<cylinder length="0.005" radius="0.13" />
+						</geometry>
+						<origin xyz="0.41 0.30 0.125" />
+					</collision>
+					<collision> <!--  rear laser scanner -->
+						<geometry>
+							<cylinder length="0.005" radius="0.08" />
+						</geometry>
+						<origin xyz="-0.37 -0.27 0.125" />
+					</collision>					
+
+					<collision name="CleaningTool">
+						<geometry>
+							<cylinder length="0.005" radius="0.235" />
+						</geometry>
+						<origin xyz="0.295 -0.114 0.125" />
+					</collision>
+				</link>
+				
+				<joint name="BaseToFrontLaser" type="fixed">
+					<parent link="RobotFrame" />
+					<child link="frontLaser/MountFrame" />
+					<origin xyz="0.41 0.30 0.125" rpy="180 0 48" />
+				</joint>
+
+				<joint name="BaseToRearLaser" type="fixed">
+					<parent link="RobotFrame" />
+					<child link="rearLaser/MountFrame" />
+					<origin xyz="-0.37 -0.27 0.125" rpy="180 0 225" />
+				</joint>
+
+				<joint name="DepthMount" type="fixed">
+					<parent link="RobotFrame" />
+					<child link="depthCamMount" />
+					<origin xyz="0.45 0.27 0.60" rpy="0 0 0" />
+				</joint>
+
+				<joint name="DepthCam1_Flip" type="fixed">
+					<parent link="depthCamMount" />
+					<child link="depthCam1/Flip" />
+					<origin xyz="0.0 0.04 -0.06" rpy="0 0 180" />
+
+				</joint>
+				<joint name="DepthCam1_Pitch" type="fixed">
+					<parent link="depthCam1/Flip" />
+					<child link="depthCam1/Pitch" />
+					<origin xyz="0.0 0.0 0.0" rpy="0 -125 0" />
+
+				</joint>
+
+				<joint name="DepthCam1_Pan" type="fixed">
+					<parent link="depthCam1/Pitch" />
+					<child link="depthCam1/PrimeSenseFrame" />
+					<origin xyz="0.0 0.0 0.0" rpy="9 0 0" />
+				</joint>
+
+				<joint name="DepthCam2_Pitch" type="fixed">
+					<parent link="depthCamMount" />
+					<child link="depthCam2/Pitch" />
+					<origin xyz="0.0 -0.04 0.03" rpy="0 130 0" />
+				</joint>
+
+				<joint name="DepthCam2_Pan" type="fixed">
+					<parent link="depthCam2/Pitch" />
+					<child link="depthCam2/PrimeSenseFrame" />
+					<origin xyz="0.0 0.0 0.0" rpy="35 0 0" />
+				</joint>
+
+			</model>
+		</RMDF>
+	</Model>
+</root>
