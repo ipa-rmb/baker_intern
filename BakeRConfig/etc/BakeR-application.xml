@@ -11,6 +11,7 @@
 	<var useDepth2="true"/>
 	<var useDepth3="false"/>
 	<var useDepth4="false"/>
+
 	<var useRhodos="true"/>
 
 	<include file="${findpkg SCITOSJoystick}/etc/SCITOSJoystick.xml" />
@@ -72,9 +73,16 @@
 			<using name="../../robot/OdometryFrame"/>
 			<include file="${findpkg BakeRCleaningModule}/etc/BakeRCleaningModule.xml"/>
 			<parameter name="BakeRCleaningModule">
-				<BrushCleaningSpeed>255</BrushCleaningSpeed>
-				<BrushOrientationSpeed>200</BrushOrientationSpeed>
-				<ValveOnTime>3</ValveOnTime>
+				<BrushCleaningSpeed>127</BrushCleaningSpeed>
+				<BrushOrientationSpeed>50</BrushOrientationSpeed>
+				<ValveOnTime>1</ValveOnTime>
+				<ValveOffTime>20</ValveOffTime>
+			</parameter>
+		</namespace>
+		<namespace name="bay">
+			<include file="${findpkg BakeRModuleBay}/etc/BakeRModuleBay.xml"/>
+			<parameter name="ModuleBay">
+				<DockHeight>1150</DockHeight>
 			</parameter>
 		</namespace>
 	</namespace>
