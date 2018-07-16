@@ -1,0 +1,401 @@
+<?xml version="1.0" ?>
+<robot name="scitosA5" 
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface" 
+       xmlns:joint="http://playerstage.sourceforge.net/gazebo/xmlschema/#slider" 
+       xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- calibration data -->
+  <xacro:include filename="$(find scitos_description)/urdf/scitos_calibration.xacro" />
+
+  <!-- materials -->
+  <material name="Red">
+    <color rgba="0.8 0.0 0.0 1.0"/>
+  </material>
+  <material name="Black">
+    <color rgba="0.02 0.02 0.02 1.0"/>
+  </material>
+  <material name="Aluminium">
+    <color rgba="0.65 0.65 0.65 1.0"/>
+  </material>
+  <material name="white">
+	<color rgba="1 1 1 1" />
+  </material>
+  <material name="black">
+	<color rgba="0 0 0 1" />
+  </material>
+  <material name="red">
+	<color rgba="1 0 0 1" />
+  </material>
+  <material name="green">
+	<color rgba="0 1 0 1" />
+  </material>
+  <material name="blue">
+	<color rgba="0 0 1 1" />
+  </material>
+  <material name="yellow">
+	<color rgba="1 1 0 1" />
+  </material>
+  <material name="darkgray">
+	<color rgba="0.3 0.3 0.3 1" />
+  </material>
+  <material name="gray">
+	<color rgba="0.7 0.7 0.7 1" />
+  </material>
+  <material name="glass">
+	<color rgba="1 1 1 0.2" />
+  </material>
+
+  <!-- base_footprint : a fictional link that is on the floor plane, needed for move_base -->
+  <link name="base_footprint">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0 0 0"/> 
+      </geometry>
+      <material name="Red"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0 0 0"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Base link is the actual robot body -->
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+		<mesh filename="package://scitos_description/meshes/scitos_1.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.3"/>
+      <geometry>
+        <cylinder length="0.6" radius="0.2"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <!-- Base footprint -> base_link -->
+  <joint name="base_footprint_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.021"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+  <!-- base_link -> base_laser_link -->
+  <joint name="base_laser_joint" type="fixed">
+    <axis xyz="0 1 0"/>
+    <origin rpy="${front_laser_scan_rot_x} ${front_laser_scan_rot_y} ${front_laser_scan_rot_z}" 
+	    xyz="${front_laser_scan_trans_x} ${front_laser_scan_trans_y} ${front_laser_scan_trans_z}"  />
+    <parent link="base_link"/>
+    <child link="base_laser_link"/>
+  </joint>
+
+
+  <!-- the laser -->
+  <link name="base_laser_link" type="laser">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 -0.09"/>
+      <geometry>
+		<cylinder length="0.18" radius="0.04"/>
+      </geometry>
+	  <material name="yellow" />
+    </visual>
+  </link>
+
+
+  <!-- base_halo is the metal frame that the ptu sit on top of-->
+  <link name="base_halo">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+	<mesh filename="package://scitos_description/meshes/head_frame.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.25"/>
+      <geometry>
+        <cylinder length="0.5" radius="0.25"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_halo_joint" type="fixed" >
+    <origin  xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_link" />
+    <child link="base_halo" />
+  </joint>
+
+  <!-- Pan-Tilt lower motor -->
+  <link name="ptu_pan_motor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	<mesh filename="package://scitos_description/meshes/pantilt0.dae"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0.015 0"/>
+      <geometry>  
+        <box size="0.04 .07 .05"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- base_link -> pantilt -->
+  <joint name="pantilt_joint" type="fixed">
+    <origin rpy="${pan_tilt_base_plate_rot_x} ${pan_tilt_base_plate_rot_y} ${pan_tilt_base_plate_rot_z}" 
+	    xyz="${pan_tilt_base_plate_trans_x} ${pan_tilt_base_plate_trans_y} ${pan_tilt_base_plate_trans_z}"/>
+    <parent link="base_link"/>
+    <child link="ptu_pan_motor"/>
+  </joint>
+
+  <!-- pantilt upper motor -->
+  <link name="ptu_tilt_motor">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	<mesh filename="package://scitos_description/meshes/pantilt1.dae"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin/>
+      <geometry>
+        <box size="0.04 .04 .06"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- pan joint -->
+  <joint name="pan" type="continuous">
+    <origin xyz="0 0 0.04572" rpy="1.57 0 0"/>
+    <axis xyz="0 1 0"/>
+    <parent link="ptu_pan_motor"/>
+    <child link="ptu_tilt_motor"/>
+  </joint>
+
+
+  <!-- the top pantilt hinge bracket that joints the tilt motor to the aluminium plate -->
+  <link name="ptu_hinge">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	<mesh filename="package://scitos_description/meshes/pantilt2.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin/>
+      <geometry>
+        <box size=" .03 .27 .004"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <!-- tilt joint -->
+  <joint name="tilt" type="continuous">
+    <origin xyz="0 0.045974 0" rpy="-1.57 0 0"/>
+    <axis xyz="0 1 0"/>
+    <parent link="ptu_tilt_motor"/>
+    <child link="ptu_hinge"/>
+  </joint>
+
+
+  <!-- ptu_mount: the top aluminium plate on the ptu unit -->
+  <link name="ptu_mount">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+	<mesh filename="package://scitos_description/meshes/pantilt3.dae"/>
+      </geometry>
+      <material name="Aluminium"/>
+    </visual>
+    <collision>
+      <origin/>
+      <geometry>
+        <box size=" .03 .27 .004"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ptu_hing -> ptu_mount -->
+  <joint name="hinge_to_mount" type="fixed">
+    <origin xyz="0 0 0.039116" rpy="0 0 0"/>
+    <parent link="ptu_hinge"/>
+    <child link="ptu_mount"/>
+  </joint>
+
+  <!-- xtion camera on head -->
+  <link name="head_xtion_link">
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://scitos_description/meshes/xtion.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.071"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ptu plate -> xtion -->
+  <joint name="head_xtion_joint" type="fixed" >
+    <origin rpy="${head_xtion_rot_x} ${head_xtion_rot_y} ${head_xtion_rot_z}" 
+	    xyz="${head_xtion_trans_x} ${head_xtion_trans_y} ${head_xtion_trans_z}" />
+    <axis xyz="0 0 1"/>
+    <parent link="ptu_mount"/>
+    <child link="head_xtion_link"/>
+  </joint>
+
+
+  <!-- HEAD -->
+
+  <link name="head_base_frame">
+	<visual>
+	  <geometry>
+		<sphere radius="0.15" />
+	  </geometry>
+	  <material name="glass"/>
+	</visual>
+  </link>
+
+  <joint name="base_link_to_head" type="fixed">
+	<parent link="base_link" />
+	<child link="head_base_frame" />
+	<origin xyz="-0.075 0 1.32" />
+  </joint>
+
+  <link name="head_swivel_frame">
+	<visual>
+	  <geometry>
+		<cylinder length="0.1" radius="0.05" />
+	  </geometry>
+	  <material name="gray" />
+	</visual>
+  </link>
+
+  <joint name="HeadPan" type="continuous">
+	<parent link="head_base_frame" />
+	<child link="head_swivel_frame" />
+	<axis xyz="0 0 1" />
+  </joint>
+  
+  <link name="head_frame">
+	<visual>
+	  <geometry>
+		<box size="0.175 0.19 0.07" />
+	  </geometry>
+	  <origin xyz="0 0 0.02" rpy="0 0 0" />
+	  <material name="gray" />
+	</visual>
+  </link>
+
+  <joint name="HeadTilt" type="continuous">
+	<parent link="head_swivel_frame" />
+	<child link="head_frame" />
+	<axis xyz="0 1 0" />
+  </joint>
+  
+  <link name="left_eye_frame">
+	<visual>
+	  <geometry>
+		<sphere radius="0.025" />
+	  </geometry>
+	  <material name="white" />
+	</visual>
+  </link>
+
+  <joint name="HeadToLeftEyeBase" type="fixed">
+	<parent link="head_frame" />
+	<child link="left_eye_base_frame" />
+	<origin xyz="0.08 0.05 0.02" />
+  </joint>
+  <joint name="EyesTilt" type="continuous">
+	<parent link="left_eye_base_frame" />
+	<child link="left_eye_swivel_frame" />
+	<axis xyz="0 1 0" />
+  </joint>
+  <joint name="EyesPan" type="continuous">
+	<parent link="left_eye_swivel_frame" />
+	<child link="left_eye_frame" />
+	<axis xyz="0 0 1" />
+  </joint>
+  
+  <link name="right_eye_frame">
+	<visual>
+	  <geometry>
+		<sphere radius="0.025" />
+	  </geometry>
+	  <material name="white" />
+	</visual>
+  </link>
+
+  <joint name="head_to_right_eye_base" type="fixed">
+	<parent link="head_frame" />
+	<child link="right_eye_base_frame" />
+	<origin xyz="0.08 -0.05 0.02" />
+  </joint>
+
+  <joint name="RightEyeBaseToRightEyeSwivel" type="continuous">
+	<parent link="right_eye_base_frame" />
+	<child link="right_eye_swivel_frame" />
+	<axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="RightEyeSwivelToRightEye" type="continuous">
+	<parent link="right_eye_swivel_frame" />
+	<child link="right_eye_frame" />
+	<axis xyz="0 0 1" />
+  </joint>
+
+  <link name="right_eye_base_frame" />
+  <link name="left_eye_base_frame" />
+  <link name="right_eye_swivel_frame" />
+  <link name="left_eye_swivel_frame" />
+
+  <!-- xtion camera internal frames (these moved from openni_launch/kinect_frames.launch) -->
+  <link name="head_xtion_depth_frame"/>
+  <link name="head_xtion_rgb_frame"/>
+  <link name="head_xtion_depth_optical_frame"/>
+  <link name="head_xtion_rgb_optical_frame"/>
+
+  <joint name="head_xtion_base_link" type="fixed" >
+    <origin rpy="0 0 0" 
+            xyz="0 0.045 0" />
+    <parent link="head_xtion_link"/>
+    <child link="head_xtion_depth_frame"/>
+  </joint>
+
+  <joint name="head_xtion_base_link1" type="fixed" >
+    <origin rpy="0 0 0" 
+            xyz="0 0.02 0" />
+    <parent link="head_xtion_link"/>
+    <child link="head_xtion_rgb_frame"/>
+  </joint>
+
+  <joint name="head_xtion_base_link2" type="fixed" >
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" 
+            xyz="0 0 0" />
+    <parent link="head_xtion_depth_frame"/>
+    <child link="head_xtion_depth_optical_frame"/>
+  </joint>
+
+  <joint name="head_xtion_base_link3" type="fixed" >
+    <origin rpy="-1.5707963267948966 0 -1.5707963267948966" 
+            xyz="0 0 0" />
+    <parent link="head_xtion_rgb_frame"/>
+    <child link="head_xtion_rgb_optical_frame"/>
+  </joint>
+
+</robot>

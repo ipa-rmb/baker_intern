@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+	<arg name="camera" default="lips_camera" />
+	
+	<node name="lips_camera" pkg="lips_camera" type="lips_camera" output="screen" required="true">
+		<rosparam command="load" file="$(find lips_camera)/ros/launch/lips_camera_params.yaml"/>
+		<remap from="~pointcloud_out" to="/$(arg camera)/depth/points"/>
+		<remap from="~pointcloud_xyzrgb_out" to="/$(arg camera)/depth_registered/points"/>
+		<remap from="~camera_info" to="/$(arg camera)/depth/camera_info"/>
+		<remap from="~camera_info_rgb" to="/$(arg camera)/depth_registered/camera_info"/>
+		<remap from="~color_image" to="/$(arg camera)/color_image"/>
+	</node>
+
+</launch>

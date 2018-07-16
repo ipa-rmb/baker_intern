@@ -1,0 +1,11 @@
+# activates RGB-D processing with attached color camera if set true
+# bool
+enable_rgbd_processing: true
+
+# publishes the image of the attached color camera if set true
+# bool
+publish_color_image: true
+
+# the frame id of the color camera
+# string
+rgb_frame_id: camera_link
