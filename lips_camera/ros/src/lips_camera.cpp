@@ -124,6 +124,12 @@ void LipsCamera::open()
 		return;
 	}
 
+	openni::Array<openni::DeviceInfo> info;
+	openni::OpenNI::enumerateDevices(&info);
+	std::cout << "Found " << info.getSize() << " devices." << std::endl;
+	for (int i=0; i<info.getSize(); ++i)
+		std::cout << info[i].getName() << ": " << info[i].getUri() << ", " << info[i].getVendor() << std::endl;
+
 	// open camera
 	if (openni::STATUS_OK != camera_device_.open(openni::ANY_DEVICE))
 	{
