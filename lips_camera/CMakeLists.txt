@@ -60,6 +60,7 @@ find_package(PCL REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 	INCLUDE_DIRS
+		common/include
 		ros/include
 #	LIBRARIES lips_camera
 	CATKIN_DEPENDS
