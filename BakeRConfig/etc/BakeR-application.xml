@@ -57,7 +57,7 @@
 		<namespace name="3d">
 			<parameter name="Rhodos">
 				<AcquisitionPlugin class="mira::mapping::PointCloudAcquisition"/>
-				<CropRadius>4.0</CropRadius>
+				<CropRadius>2.0</CropRadius>
 				<ObstacleMapClearInterval>60000</ObstacleMapClearInterval>
 			</parameter>
 			<parameter name="Rhodos.ObstacleDetectionPlugin">

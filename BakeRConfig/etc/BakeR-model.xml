@@ -1,6 +1,6 @@
 <root>
 	<Model class="mira::robot::DifferentialRobotModel">
-		<MaxForwardVelocity>0.3</MaxForwardVelocity>
+		<MaxForwardVelocity>0.5</MaxForwardVelocity>
 		<MaxBackwardVelocity>-0.2</MaxBackwardVelocity>
 		<MaxRotVelocity>60</MaxRotVelocity>
 		<TransEpsilonVelocity>0.01</TransEpsilonVelocity>
@@ -26,13 +26,12 @@
 						<origin xyz="0.05 0 0.125" />
 					</collision>
 					 <!--  cleaner -->
-<!--					<collision>
+					<collision>
 						<geometry>
 							<cylinder length="0.005" radius="0.235" />
 						</geometry>
-						<origin xyz="0.295 -0.114 0.125" />
+						<origin xyz="0.3 -0.15 0.125" />
 					</collision>
--->
 					<collision> <!--  front laser scanner -->
 						<geometry>
 							<cylinder length="0.005" radius="0.08" />
@@ -43,14 +42,14 @@
 						<geometry>
 							<cylinder length="0.005" radius="0.235" />
 						</geometry>
-						<origin xyz="0.295 -0.114 0.125" />
+						<origin xyz="0.3 -0.15 0.125" />
 					</collision>
 				</link>
 				
 				<joint name="BaseToFrontLaser" type="fixed">
 					<parent link="RobotFrame" />
 					<child link="frontLaser/MountFrame" />
-					<origin xyz="0.41 0.32 0.125" rpy="180 0 45" />
+					<origin xyz="0.41 0.28 0.125" rpy="180 0 45" />
 				</joint>
 
 				<joint name="BaseToRearLaser" type="fixed">
@@ -87,7 +86,7 @@
 				<joint name="DepthCam2_Pitch" type="fixed">
 					<parent link="depthCamMount" />
 					<child link="depthCam2/Pitch" />
-					<origin xyz="0.0 -0.04 0.03" rpy="0 124 0" />
+					<origin xyz="0.0 -0.12 -0.03" rpy="0 122 2" />
 				</joint>
 
 				<joint name="DepthCam2_Pan" type="fixed">
